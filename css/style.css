@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Syncopate');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,15 +9,49 @@
 body {
     height: 100vh;
     width: 100%;
-    background-image: url(../img/green-background.jpg);
+    background-image: url(../img/green-pink-background.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
+}
+
+header {
+    margin: 100px auto;
+    width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 3em;
+    color: #57606f;
+    text-shadow: 4px 4px 15px rgba(61,63,64,0.45);
 }
 
 .container {
     margin: 100px auto;
+    padding: 20px;
     border-radius: 4px;
     height: 600px;
     width: 600px;
-    background-color: #cecece;
+    background-color: #fff;
+    -webkit-box-shadow: 24px 24px 31px 6px rgba(61,63,64,0.25);
+    -moz-box-shadow: 24px 24px 31px 6px rgba(61,63,64,0.25);
+    box-shadow: 24px 24px 31px 6px rgba(61,63,64,0.25);
+
+    display: grid;
+    grid-template-columns: 125px 125px 125px 125px;
+    grid-template-rows: 125px 125px 125px 125px;
+    grid-gap: 20px;
+}
+
+.box {
+    padding: 5px;
+    background-color: #57606f;
+    background-image: url(../img/02-car.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 7px solid #57606f;
+    border-radius: 4px;
 }
