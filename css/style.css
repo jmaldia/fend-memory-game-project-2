@@ -47,11 +47,14 @@ h1 {
 
 .box {
     padding: 5px;
-    background-color: #57606f;
-    background-image: url(../img/02-car.png);
+    background-color: #CFEDE8;
+    background-image: url(../img/01-car-sml.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 7px solid #57606f;
+    -webkit-box-shadow: 2px 2px 2px  rgba(61,63,64,0.25);
+    -moz-box-shadow: 2px 2px 2px  rgba(61,63,64,0.25);
+    box-shadow: 2px 2px 2px  rgba(61,63,64,0.25);
+    border: 7px solid #FECCCB;
     border-radius: 4px;
 }
