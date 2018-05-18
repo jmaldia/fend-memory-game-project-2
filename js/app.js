@@ -1,6 +1,7 @@
 // jQuery Variables
 const box = $('.box');
 const board = $('.container');
+const moves = $('#moves');
 
 let imagePaths = [
     'img/01-car-sml.png',
@@ -22,6 +23,8 @@ let imagePaths = [
 ];
 let moveCounter = 0;
 let count = 0;
+let cardOne = '';
+let cardTwo = '';
 
 // Randomize imagePaths array
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -69,7 +72,6 @@ board.on('click', '.box', function(e) {
     counter();
 }); 
 
-
 // Counts total moves and moves per turn
 function counter() {
     if (count === 0) {
@@ -79,7 +81,16 @@ function counter() {
         // isMatched();
         count = 0;
         moveCounter += 1;
+        (moveCounter === 1) ? moves.html(moveCounter + " Move") : moves.html(moveCounter + " Moves");
     }
     console.log(`${count} & ${moveCounter}`);
 }
 
+// Check if Matched
+function isMatched() {
+    if (card1 === card2) {/*matched*/
+        // Keep open
+    } else {
+        // Flip Back
+    }
+}
