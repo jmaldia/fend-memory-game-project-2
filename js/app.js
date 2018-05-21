@@ -82,16 +82,22 @@ board.on('click', '.box', function(e) {
     e.preventDefault;
     $(this).find('.inner-box').toggleClass('flip');
     // $(this).find('.back').addClass('grow').delay(3000).removeClass('grow');
-    counter();
+    counter($(this));
+    if (count < 2) {
+        $(this).prop('disabled', true);
+        if (!isMatched()){
+            box.prop('disabled', false);
+        }
+    }
 }); 
 
 // Counts total moves and moves per turn
-function counter() {
+function counter(card) {
     if (count === 0) {
         count += 1;
     } else {
         count += 1;
-        // isMatched();
+        isMatched();
         count = 0;
         moveCounter += 1;
         (moveCounter === 1) ? moves.html(moveCounter + " Move") : moves.html(moveCounter + " Moves");
@@ -102,11 +108,12 @@ function counter() {
 
 // Check if Matched
 function isMatched() {
-    if (card1 === card2) {/*matched*/
-        // Keep open
-    } else {
-        // Flip Back
-    }
+    // if (true) {/*matched*/
+    //     // Keep open
+    // } else {
+    //     // Flip Back
+    // }
+    return false;
 }
 
 // Star rating  - not yet working
