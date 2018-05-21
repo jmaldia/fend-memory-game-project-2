@@ -36,6 +36,12 @@ h1 {
     color: #57606f;
 }
 
+#redo i {
+    color: #57606f;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .container {
     margin: 0 auto;
     padding: 20px;

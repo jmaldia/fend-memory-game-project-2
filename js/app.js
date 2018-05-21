@@ -4,6 +4,7 @@ const board = $('.container');
 const moves = $('#moves');
 const stars = $('.left-options');
 const timer = $('#timer');
+const redo = $('#redo');
 
 let imagePaths = [
     'img/01-car-sml.png',
@@ -25,9 +26,9 @@ let imagePaths = [
 ];
 let moveCounter = 0;
 let count = 0;
-let removeStar = 13;
 let cardOne = '';
 let cardTwo = '';
+let sec = 0;
 
 // Randomize imagePaths array
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -47,8 +48,9 @@ function shuffle(array) {
 
 let newImagePaths = shuffle(imagePaths);
 
-// Build board on page load
-$(document).ready(function() {
+// Build board
+function buildBoard() {
+    board.empty();
     for (let index = 0; index < newImagePaths.length; index++) {
         let boxHTML = `
             <div class="box">
@@ -65,6 +67,14 @@ $(document).ready(function() {
 
         board.append(boxHTML);
     }
+}
+
+$(document).ready(buildBoard());
+
+redo.on('click', function(){
+    buildBoard();
+    clearInterval(gameTimer);
+    sec = 0;
 });
 
 // Flip Card on click
@@ -107,7 +117,6 @@ function starRating() {
 }
 
 // Game Timer
-let sec = 0;
 function gameTimer() {
     setInterval(function(){
         timer.html(('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2) );
