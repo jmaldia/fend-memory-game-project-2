@@ -3,6 +3,7 @@ const box = $('.box');
 const board = $('.container');
 const moves = $('#moves');
 const stars = $('.left-options');
+const timer = $('#timer');
 
 let imagePaths = [
     'img/01-car-sml.png',
@@ -86,6 +87,7 @@ function counter() {
         (moveCounter === 1) ? moves.html(moveCounter + " Move") : moves.html(moveCounter + " Moves");
         starRating();
     }
+    if (moveCounter === 0) { gameTimer(); }
 }
 
 // Check if Matched
@@ -105,6 +107,11 @@ function starRating() {
 }
 
 // Game Timer
+let sec = 0;
 function gameTimer() {
-    
+    setInterval(function(){
+        timer.html(('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2) );
+        sec++;
+    }, 1000);
 }
+
