@@ -2,6 +2,7 @@
 const box = $('.box');
 const board = $('.container');
 const moves = $('#moves');
+const stars = $('.left-options');
 
 let imagePaths = [
     'img/01-car-sml.png',
@@ -23,6 +24,7 @@ let imagePaths = [
 ];
 let moveCounter = 0;
 let count = 0;
+let removeStar = 13;
 let cardOne = '';
 let cardTwo = '';
 
@@ -82,8 +84,8 @@ function counter() {
         count = 0;
         moveCounter += 1;
         (moveCounter === 1) ? moves.html(moveCounter + " Move") : moves.html(moveCounter + " Moves");
+        starRating();
     }
-    console.log(`${count} & ${moveCounter}`);
 }
 
 // Check if Matched
@@ -93,4 +95,16 @@ function isMatched() {
     } else {
         // Flip Back
     }
+}
+
+// Star rating  - not yet working
+function starRating() {
+    if (moveCounter === 13 || moveCounter === 17|| moveCounter === 21 ||moveCounter === 25) {
+        stars.find('.fa-star:last').remove();
+    }
+}
+
+// Game Timer
+function gameTimer() {
+    
 }

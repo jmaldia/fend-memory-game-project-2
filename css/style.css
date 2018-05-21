@@ -117,3 +117,7 @@ h1 {
 /* .grow {
     transform: scale(1.2);
 } */
+
+.hide {
+    display: none;
+}
