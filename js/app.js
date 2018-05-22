@@ -53,7 +53,7 @@ function buildBoard() {
     board.empty();
     for (let index = 0; index < newImagePaths.length; index++) {
         let boxHTML = `
-            <div class="box">
+            <div class="box clicked">
             <div class="inner-box">
                 <div class="card front">
                     <i class="far fa-gem"></i>
@@ -78,21 +78,30 @@ redo.on('click', function(){
 });
 
 // Flip Card on click
-board.on('click', '.box', function(e) {
+board.on('click', '.clicked', function(e) {
     e.preventDefault;
     $(this).find('.inner-box').toggleClass('flip');
-    // $(this).find('.back').addClass('grow').delay(3000).removeClass('grow');
-    counter($(this));
-    if (count < 2) {
-        $(this).prop('disabled', true);
-        if (!isMatched()){
-            box.prop('disabled', false);
+
+    counter();
+
+    // NOTES: 
+    // I'm trying to check if flipped cards are matching
+    // I want to disable cards if they are matched
+    console.log(count);
+    if (count === 1) {
+        cardOne = $(this).find('.back img').prop('src');
+    } else {
+        cardTwo = $(this).find('.back img').prop('src');
+        // console.log($(this));
+        if (isMatched()){
+            console.log(isMatched());
+            box.toggleClass('clicked');
         }
     }
 }); 
 
 // Counts total moves and moves per turn
-function counter(card) {
+function counter() {
     if (count === 0) {
         count += 1;
     } else {
@@ -108,12 +117,11 @@ function counter(card) {
 
 // Check if Matched
 function isMatched() {
-    // if (true) {/*matched*/
-    //     // Keep open
-    // } else {
-    //     // Flip Back
-    // }
-    return false;
+    if (cardOne === cardTwo) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // Star rating  - not yet working

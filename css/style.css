@@ -59,6 +59,10 @@ h1 {
     grid-gap: 20px;
 }
 
+.clicked {
+
+}
+
 .box {
     /* background-image: url(../img/05-car-sml.png);
     background-size: cover;
