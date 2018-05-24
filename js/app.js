@@ -159,10 +159,10 @@ function gameTimer() {
     time = setInterval(function(){
         timer.html(('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2));
         sec++;
-        if (sec === 5) { 
-            stopTimer(); 
-            alert(sec - 2);
-        }
+        // if (sec === 5) { 
+        //     stopTimer(); 
+        //     alert(sec - 2);
+        // }
     }, 1000);
 }
 
