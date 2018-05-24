@@ -82,20 +82,19 @@ redo.on('click', function(){
 // Flip Card on click
 board.on('click', '.box', function(e) {
     e.preventDefault;
-    $(this).find('.inner-box').toggleClass('flip');
+    $(this).find('.inner-box').toggleClass('flip').delay(2000);
 
     counter();
 
-    // NOTES: 
-    // I'm trying to check if flipped cards are matching
-    // I want to disable cards if they are matched
     if (count === 1) {
         openedCardsArray.push($(this).find('.back img').prop('src'));
-        $(this).prop('disabled', true);
+        $(this).prop("disabled", true);
     } else {
         openedCardsArray.push($(this).find('.back img').prop('src'));
-        $(this).prop('disabled', true);
+        $(this).prop("disabled", true);
+
         isMatched();
+
         if (imagePaths.length === openedCardsArray.length) {
             console.log('game over');
         }
@@ -121,18 +120,20 @@ function isMatched() {
     if (openedCardsArray[openedCardsArray.length-1] === openedCardsArray[openedCardsArray.length-2]) {
         return true;
     } else {
-        openedCardsArray.splice(openedCardsArray.length-2, 2);
-        findDiv();
-        console.log(openedCardsArray);
-        return false;
+        setTimeout(function() {
+            findDiv();
+            openedCardsArray.splice(openedCardsArray.length-2, 2);
+            return false;
+        }, 1000);
     }
 }
 
 function findDiv() {
-    board.find('div').each(function() {
-        if ($(this).find('img').attr('src') === openedCardsArray[openedCardsArray.length-2] || $(this).find('img').attr('src') === openedCardsArray[openedCardsArray.length-1]) {
-            $(this).parent().parent().prop('disabled', false);
-            console.log($(this).parent().parent());
+    $('.container').children().each(function() {
+        let image = $(this).find('.back img').attr('src');
+        if ((openedCardsArray[openedCardsArray.length-2].indexOf(image) > -1 && $(this).find('.inner-box').hasClass('flip')) || (openedCardsArray[openedCardsArray.length-1].indexOf(image) > -1) && $(this).find('.inner-box').hasClass('flip')) {
+            $(this).prop('disabled', false);
+            $(this).find('.inner-box').toggleClass('flip');
         }
     });  
 }
