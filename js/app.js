@@ -26,9 +26,11 @@ let imagePaths = [
 ];
 let moveCounter = 0;
 let count = 0;
-let cardOne = '';
-let cardTwo = '';
+let openedCardsArray = [];
+// let cardOne = '';
+// let cardTwo = '';
 let sec = 0;
+
 
 // Randomize imagePaths array
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -53,15 +55,15 @@ function buildBoard() {
     board.empty();
     for (let index = 0; index < newImagePaths.length; index++) {
         let boxHTML = `
-            <div class="box clicked">
-            <div class="inner-box">
-                <div class="card front">
-                    <i class="far fa-gem"></i>
+            <div class="box">
+                <div class="inner-box">
+                    <div class="card front">
+                        <i class="far fa-gem"></i>
+                    </div>
+                    <div class="card back" data-image-index="${index}">
+                        <img src="${imagePaths[index]}">
+                    </div>
                 </div>
-                <div class="card back" data-image-index="${index}">
-                    <img src="${imagePaths[index]}">
-                </div>
-            </div>
             </div>
         `;
 
@@ -78,7 +80,7 @@ redo.on('click', function(){
 });
 
 // Flip Card on click
-board.on('click', '.clicked', function(e) {
+board.on('click', '.box', function(e) {
     e.preventDefault;
     $(this).find('.inner-box').toggleClass('flip');
 
@@ -87,15 +89,15 @@ board.on('click', '.clicked', function(e) {
     // NOTES: 
     // I'm trying to check if flipped cards are matching
     // I want to disable cards if they are matched
-    console.log(count);
     if (count === 1) {
-        cardOne = $(this).find('.back img').prop('src');
+        openedCardsArray.push($(this).find('.back img').prop('src'));
+        $(this).prop('disabled', true);
     } else {
-        cardTwo = $(this).find('.back img').prop('src');
-        // console.log($(this));
-        if (isMatched()){
-            console.log(isMatched());
-            box.toggleClass('clicked');
+        openedCardsArray.push($(this).find('.back img').prop('src'));
+        $(this).prop('disabled', true);
+        isMatched();
+        if (imagePaths.length === openedCardsArray.length) {
+            console.log('game over');
         }
     }
 }); 
@@ -106,7 +108,6 @@ function counter() {
         count += 1;
     } else {
         count += 1;
-        isMatched();
         count = 0;
         moveCounter += 1;
         (moveCounter === 1) ? moves.html(moveCounter + " Move") : moves.html(moveCounter + " Moves");
@@ -117,11 +118,23 @@ function counter() {
 
 // Check if Matched
 function isMatched() {
-    if (cardOne === cardTwo) {
+    if (openedCardsArray[openedCardsArray.length-1] === openedCardsArray[openedCardsArray.length-2]) {
         return true;
     } else {
+        openedCardsArray.splice(openedCardsArray.length-2, 2);
+        findDiv();
+        console.log(openedCardsArray);
         return false;
     }
+}
+
+function findDiv() {
+    board.find('div').each(function() {
+        if ($(this).find('img').attr('src') === openedCardsArray[openedCardsArray.length-2] || $(this).find('img').attr('src') === openedCardsArray[openedCardsArray.length-1]) {
+            $(this).parent().parent().prop('disabled', false);
+            console.log($(this).parent().parent());
+        }
+    });  
 }
 
 // Star rating  - not yet working
@@ -133,9 +146,12 @@ function starRating() {
 
 // Game Timer
 function gameTimer() {
-    setInterval(function(){
+    let time = setInterval(function(){
         timer.html(('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2) );
         sec++;
     }, 1000);
 }
 
+function stopTimer() {
+    clearInterval(time);
+}
