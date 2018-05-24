@@ -5,6 +5,7 @@ const moves = $('#moves');
 const stars = $('.left-options');
 const timer = $('#timer');
 const redo = $('#redo');
+const gameOverModal = $('.game-over');
 
 let imagePaths = [
     'img/01-car-sml.png',
@@ -70,6 +71,7 @@ function buildBoard() {
         board.append(boxHTML);
     }
 
+    gameOverModal.addClass('hide');
     stars.find('.fa-star').show();
     stopTimer();
     sec = 0;
@@ -77,7 +79,7 @@ function buildBoard() {
     timer.html(timePrint);
     count = 0;
     moveCounter = 0;
-    moves.html(moveCounter + " Move")
+    moves.html(moveCounter + " Move");
 }
 
 
@@ -93,7 +95,7 @@ redo.on('click', function(){
 // Flip Card on click
 board.on('click', '.box', function(e) {
     e.preventDefault;
-    $(this).find('.inner-box').toggleClass('flip').delay(2000);
+    $(this).find('.inner-box').toggleClass('flip');
 
     counter();
 
@@ -174,6 +176,6 @@ function stopTimer() {
 function gameOver() {
     if (imagePaths.length === openedCardsArray.length) {
         stopTimer();
-        alert('Game Over');
+        gameOverModal.removeClass('hide');
     }
 }
