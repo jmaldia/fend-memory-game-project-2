@@ -80,8 +80,11 @@ function buildBoard() {
     moves.html(moveCounter + " Move")
 }
 
+
 $(document).ready(buildBoard());
 
+
+// This resets the board
 redo.on('click', function(){
     buildBoard();
     sec = 0;
@@ -102,10 +105,7 @@ board.on('click', '.box', function(e) {
         $(this).prop("disabled", true);
 
         isMatched();
-
-        if (imagePaths.length === openedCardsArray.length) {
-            stopTimer();
-        }
+        gameOver();
     }
 }); 
 
@@ -132,10 +132,11 @@ function isMatched() {
             findDiv();
             openedCardsArray.splice(openedCardsArray.length-2, 2);
             return false;
-        }, 1000);
+        }, 700);
     }
 }
 
+// Enables disabled divs and flips back turn unmatched cards
 function findDiv() {
     $('.container').children().each(function() {
         let image = $(this).find('.back img').attr('src');
@@ -156,13 +157,23 @@ function starRating() {
 // Game Timer
 function gameTimer() {
     time = setInterval(function(){
-        timePrint = ('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2);
-        timer.html(timePrint);
+        timer.html(('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2));
         sec++;
+        if (sec === 5) { 
+            stopTimer(); 
+            alert(sec - 2);
+        }
     }, 1000);
 }
 
 // Stops the Timer
 function stopTimer() {
     clearInterval(time);
+}
+
+function gameOver() {
+    if (imagePaths.length === openedCardsArray.length) {
+        stopTimer();
+        alert('Game Over');
+    }
 }
