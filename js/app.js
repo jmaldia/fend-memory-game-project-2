@@ -27,8 +27,8 @@ let imagePaths = [
 let moveCounter = 0;
 let count = 0;
 let openedCardsArray = [];
-// let cardOne = '';
-// let cardTwo = '';
+let time = '';
+let timePrint = '';
 let sec = 0;
 
 
@@ -69,13 +69,21 @@ function buildBoard() {
 
         board.append(boxHTML);
     }
+
+    stars.find('.fa-star').show();
+    stopTimer();
+    sec = 0;
+    timePrint = ('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2);
+    timer.html(timePrint);
+    count = 0;
+    moveCounter = 0;
+    moves.html(moveCounter + " Move")
 }
 
 $(document).ready(buildBoard());
 
 redo.on('click', function(){
     buildBoard();
-    clearInterval(gameTimer);
     sec = 0;
 });
 
@@ -96,7 +104,7 @@ board.on('click', '.box', function(e) {
         isMatched();
 
         if (imagePaths.length === openedCardsArray.length) {
-            console.log('game over');
+            stopTimer();
         }
     }
 }); 
@@ -141,18 +149,20 @@ function findDiv() {
 // Star rating  - not yet working
 function starRating() {
     if (moveCounter === 13 || moveCounter === 17|| moveCounter === 21 ||moveCounter === 25) {
-        stars.find('.fa-star:last').remove();
+        stars.find('.fa-star:visible:last').hide();
     }
 }
 
 // Game Timer
 function gameTimer() {
-    let time = setInterval(function(){
-        timer.html(('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2) );
+    time = setInterval(function(){
+        timePrint = ('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2);
+        timer.html(timePrint);
         sec++;
     }, 1000);
 }
 
+// Stops the Timer
 function stopTimer() {
     clearInterval(time);
 }
