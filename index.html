@@ -18,35 +18,51 @@
 	</script>
 </head>
 <body>
-    <header>
-        <!-- <img src="#"> will have the logo -->
-        <h1>Memory Game</h1>
-        <div class="menu">
-            <div class="left-options">
-                <span id="moves">0 Move</span>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div> 
-            <div class="right-options">
-                <span id="timer"></span>
-                <a id="redo" href="#"><i class="fas fa-redo-alt"></i></a>
+    <div class="wrapper"></div>
+        <header>
+            <!-- <img src="#"> will have the logo -->
+            <h1>Memory Game</h1>
+            <div class="menu">
+                <div class="left-options">
+                    <span id="moves">0 Move</span>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div> 
+                <div class="right-options">
+                    <span id="timer"></span>
+                    <a class="redo" href="#"><i class="fas fa-redo-alt"></i></a>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <div class="container"></div>
+        <div class="container"></div>
 
-    <div class="game-over hide">
-        <h3>Game Over</h3>
-        <h4 id="message">Nice one!</h4>
+        <div class="game-over hide">
+            <h3>Game Over</h3>
+            <h4 id="message">Here are your stats</h4>
 
-        <div class="stats">
-            <p id="time">00:12</p>
-            <p id="moves">14</p>
-            <p id="stars"><i class="fas fa-star"></i></p>
+            <div class="stats">
+                <p>
+                    Time: <span id="time"></span>
+                </p>
+                <p>
+                    Moves: <span id="moves"></span>
+                </p>
+                <p>
+                    Rating: 
+                    <span id="stars">
+                    </span>
+                </p>
+                <button class="redo">
+                    Play Again
+                </button>
+                <button class="exit">
+                    exit
+                </button>
+            </div>
         </div>
     </div>
 	

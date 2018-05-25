@@ -2,9 +2,9 @@
 const box = $('.box');
 const board = $('.container');
 const moves = $('#moves');
-const stars = $('.left-options');
+const stars = $('.fa-star');
 const timer = $('#timer');
-const redo = $('#redo');
+const redo = $('.redo');
 const gameOverModal = $('.game-over');
 
 let imagePaths = [
@@ -31,6 +31,7 @@ let openedCardsArray = [];
 let time = '';
 let timePrint = '';
 let sec = 0;
+let starCounter = 5;
 
 
 // Randomize imagePaths array
@@ -72,7 +73,7 @@ function buildBoard() {
     }
 
     gameOverModal.addClass('hide');
-    stars.find('.fa-star').show();
+    stars.show();
     stopTimer();
     sec = 0;
     timePrint = ('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2);
@@ -152,20 +153,25 @@ function findDiv() {
 // Star rating  - not yet working
 function starRating() {
     if (moveCounter === 13 || moveCounter === 17|| moveCounter === 21 ||moveCounter === 25) {
-        stars.find('.fa-star:visible:last').hide();
+        $('.fa-star:visible:last').hide();
+        starCounter--;
     }
+
+    console.log(starCounter);
 }
 
 // Game Timer
 function gameTimer() {
     time = setInterval(function(){
-        timer.html(('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2));
+        timePrint = ('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2)
+        timer.html(timePrint);
         sec++;
         // if (sec === 5) { 
         //     stopTimer(); 
         //     alert(sec - 2);
         // }
     }, 1000);
+     
 }
 
 // Stops the Timer
@@ -176,6 +182,11 @@ function stopTimer() {
 function gameOver() {
     if (imagePaths.length === openedCardsArray.length) {
         stopTimer();
+        gameOverModal.find('#time').html(timePrint);
+        gameOverModal.find('#moves').html(moveCounter);
+        for (let i = 1; i <= starCounter; i++) {
+            gameOverModal.find('#stars').append('<i class="fas fa-star"></i>');
+        }
         gameOverModal.removeClass('hide');
     }
 }
