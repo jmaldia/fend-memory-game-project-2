@@ -33,6 +33,7 @@ let time = '';
 let timePrint = '';
 let sec = 0;
 let starCounter = 5;
+let newImagePaths = [];
 
 
 // Randomize imagePaths array
@@ -51,7 +52,7 @@ function shuffle(array) {
     return array;
 }
 
-let newImagePaths = shuffle(imagePaths);
+newImagePaths = shuffle(imagePaths);
 
 // Builds a board
 function buildBoard() {
@@ -90,6 +91,7 @@ $(document).ready(buildBoard());
 
 // This resets the board
 redo.on('click', function(){
+    newImagePaths = shuffle(imagePaths);
     buildBoard();
     sec = 0;
 });
