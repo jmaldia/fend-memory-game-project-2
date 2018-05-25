@@ -151,7 +151,7 @@ h1 {
 
 .stats p, .game-over h4 {
     margin-bottom: 20px;
-    font-size: 22px;
+    font-size: 20px;
     color: #333;
 }
 
@@ -188,4 +188,10 @@ ul {
     font-size: 15px;
     color: #7f8c8d;
     line-height: 120%;
+}
+
+@media (max-width: 650px) {
+    .container {
+        transform: scaleX(.80);
+    }
 }

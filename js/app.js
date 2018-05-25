@@ -53,7 +53,7 @@ function shuffle(array) {
 
 let newImagePaths = shuffle(imagePaths);
 
-// Build board
+// Builds a board
 function buildBoard() {
     board.empty();
     for (let index = 0; index < newImagePaths.length; index++) {
@@ -94,7 +94,7 @@ redo.on('click', function(){
     sec = 0;
 });
 
-// Flip Card on click
+// Event listener to Flip Card when the card is clicked
 board.on('click', '.box', function(e) {
     e.preventDefault;
     $(this).find('.inner-box').toggleClass('flip');
@@ -127,7 +127,7 @@ function counter() {
     if (moveCounter === 0) { gameTimer(); }
 }
 
-// Check if Matched
+// Checks if two open cards are matched
 function isMatched() {
     if (openedCardsArray[openedCardsArray.length-1] === openedCardsArray[openedCardsArray.length-2]) {
         return true;
@@ -141,6 +141,7 @@ function isMatched() {
 }
 
 // Enables disabled divs and flips back turn unmatched cards
+// Used in conjunction with the isMatched function
 function findDiv() {
     $('.container').children().each(function() {
         let image = $(this).find('.back img').attr('src');
@@ -151,17 +152,15 @@ function findDiv() {
     });  
 }
 
-// Star rating  - not yet working
+// Remove stars based on number of moves
 function starRating() {
     if (moveCounter === 13 || moveCounter === 17|| moveCounter === 21 ||moveCounter === 25) {
         $('.fa-star:visible:last').hide();
         starCounter--;
     }
-
-    console.log(starCounter);
 }
 
-// Game Timer
+// Starts the timer when the user clicks the first card
 function gameTimer() {
     time = setInterval(function(){
         timePrint = ('0' + Math.floor(sec/60)).slice(-2) + ':' + ('0' + (sec % 60)).slice(-2)
@@ -175,11 +174,12 @@ function gameTimer() {
      
 }
 
-// Stops the Timer
+// Stops the Timer when the game is over
 function stopTimer() {
     clearInterval(time);
 }
 
+// This function builds the modal when the game is over
 function gameOver() {
     if (imagePaths.length === openedCardsArray.length) {
         stopTimer();
@@ -189,9 +189,20 @@ function gameOver() {
             gameOverModal.find('#stars').append('<i class="fas fa-star"></i>');
         }
         gameOverModal.removeClass('hide');
+    } else if (moveCounter > 50) {
+        stopTimer();
+        gameOverModal.find('#time').html(timePrint);
+        gameOverModal.find('#moves').html(moveCounter);
+        gameOverModal.find('#message').html('You lost. Too many moves.<br>Here are your stats. ');
+        for (let i = 1; i <= starCounter; i++) {
+            gameOverModal.find('#stars').append('<i class="fas fa-star"></i>');
+        }
+        gameOverModal.removeClass('hide');
     }
 }
 
+// Listener for the exit button on the game over modal 
+// if the user does not want to play again
 exit.click(function() {
     gameOverModal.addClass('hide');
 });
