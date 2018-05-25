@@ -6,6 +6,7 @@ const stars = $('.fa-star');
 const timer = $('#timer');
 const redo = $('.redo');
 const gameOverModal = $('.game-over');
+const exit = $('.exit');
 
 let imagePaths = [
     'img/01-car-sml.png',
@@ -190,3 +191,7 @@ function gameOver() {
         gameOverModal.removeClass('hide');
     }
 }
+
+exit.click(function() {
+    gameOverModal.addClass('hide');
+});
