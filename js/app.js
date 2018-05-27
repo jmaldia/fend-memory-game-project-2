@@ -74,6 +74,7 @@ function buildBoard() {
         board.append(boxHTML);
     }
 
+    addClick();
     gameOverModal.addClass('hide');
     stars.show();
     stopTimer();
@@ -88,7 +89,6 @@ function buildBoard() {
 
 $(document).ready(buildBoard());
 
-
 // This resets the board
 redo.on('click', function(){
     newImagePaths = shuffle(imagePaths);
@@ -97,23 +97,34 @@ redo.on('click', function(){
 });
 
 // Event listener to Flip Card when the card is clicked
-board.on('click', '.box', function(e) {
-    e.preventDefault;
-    $(this).find('.inner-box').toggleClass('flip');
+function addClick() {
+    board.on('click', '.box', function(e) {
+        e.preventDefault;
+        $(this).find('.inner-box').toggleClass('flip');
 
-    counter();
+        counter();
 
-    if (count === 1) {
-        openedCardsArray.push($(this).find('.back img').prop('src'));
-        $(this).prop("disabled", true);
-    } else {
-        openedCardsArray.push($(this).find('.back img').prop('src'));
-        $(this).prop("disabled", true);
+        if (count === 1) {
+            openedCardsArray.push($(this).find('.back img').prop('src'));
+            $(this).prop("disabled", true);
+        } else {
+            openedCardsArray.push($(this).find('.back img').prop('src'));
+            $(this).prop("disabled", true);
+            if (!isMatched()) {
+                setTimeout(function() {
+                    findDiv();
+                    openedCardsArray.splice(openedCardsArray.length-2, 2);
+                }, 700);
+            }
+            gameOver();
+        }
+    }); 
+}
 
-        isMatched();
-        gameOver();
-    }
-}); 
+// Function that would turn off the event listener
+// function removeClick() {
+//     board.find('.box').off();
+// }
 
 // Counts total moves and moves per turn
 function counter() {
@@ -124,6 +135,7 @@ function counter() {
         count = 0;
         moveCounter += 1;
         (moveCounter === 1) ? moves.html(moveCounter + " Move") : moves.html(moveCounter + " Moves");
+        // removeClick();
         starRating();
     }
     if (moveCounter === 0) { gameTimer(); }
@@ -134,11 +146,7 @@ function isMatched() {
     if (openedCardsArray[openedCardsArray.length-1] === openedCardsArray[openedCardsArray.length-2]) {
         return true;
     } else {
-        setTimeout(function() {
-            findDiv();
-            openedCardsArray.splice(openedCardsArray.length-2, 2);
-            return false;
-        }, 700);
+        return false;
     }
 }
 
@@ -150,6 +158,10 @@ function findDiv() {
         if ((openedCardsArray[openedCardsArray.length-2].indexOf(image) > -1 && $(this).find('.inner-box').hasClass('flip')) || (openedCardsArray[openedCardsArray.length-1].indexOf(image) > -1) && $(this).find('.inner-box').hasClass('flip')) {
             $(this).prop('disabled', false);
             $(this).find('.inner-box').toggleClass('flip');
+            // removeClick();
+            // setTimeout(function() {
+            //     addClick();
+            // }, 700);
         }
     });  
 }
